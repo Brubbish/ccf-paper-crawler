@@ -1,0 +1,19 @@
+# Python
+__pycache__/
+*.py[cod]
+*.egg-info/
+.venv/
+
+# 运行产物（nodriver 测试遗留）
+downloads/
+*.log
+
+# 本地配置与凭据（cookie 文件绝不能提交）
+config.local.yaml
+*.cookies.txt
+ieee.txt
+acm.txt
+
+# IDE
+.idea/
+.vscode/

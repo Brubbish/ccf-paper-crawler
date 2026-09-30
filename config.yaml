@@ -1,0 +1,45 @@
+# CCF-A 安全/软工论文批量下载配置
+
+output_dir: D:\Papers\output
+
+# Unpaywall 兜底必填邮箱（必须是真实邮箱，example.com 会被拒绝并禁用该兜底）
+unpaywall_email: your-email@example.com
+
+# 要爬的年份
+years: [2022, 2023, 2024, 2025, 2026]
+
+# 并发线程数（每域名另有独立限速，调大也不会请求过快）
+workers: 3
+
+# 标题含这些关键词的条目直接过滤（poster/demo track 等）
+exclude_patterns: [poster, demo, keynote, panel, welcome, "closing remarks", "opening remarks",
+                   "table of contents", "front matter"]
+
+# OA 兜底渠道开关
+fallbacks:
+  unpaywall: true
+  openalex: true
+  s2: true
+  arxiv: true
+
+# 登录后的 cookie（两种方式二选一，按域名对应）：
+#   cookies: 直接粘贴浏览器 F12 -> Network -> 请求头里 Cookie: 后面的整串
+#   cookie_files: 扩展导出的 cookie 文件（支持 Cookie-Editor JSON / Netscape txt）
+cookies:
+  ieeexplore.ieee.org: ""      # IEEE Xplore（S&P、TIFS、TDSC、TSE、老 ICSE/ASE 年份需要）
+  dl.acm.org: ""               # ACM DL（2026 起全 OA，一般不需要）
+cookie_files:
+  ieeexplore.ieee.org: D:/Papers/ieee.txt
+  dl.acm.org: D:/Papers/acm.txt
+
+# 每域名最小请求间隔（秒），叠加覆盖默认值
+min_interval:
+  dl.acm.org: 8.0            # ACM 对突发爬取敏感（Cloudflare 挑战页），宁可慢
+  ieeexplore.ieee.org: 6.0   # IEEE 限流敏感（420），实测 2s/4s 会触发；仍有 420 时靠 60s 冷却硬扛
+
+# 会议卷手动覆盖（当自动识别选错卷时使用，键为 "venue-年份"）：
+#   ACM 系会议（CCS/ICSE/ASE/ISSTA/SOSP/FSE 2024 前）填 ACM DL proceedings DOI，
+#   SP 填确切卷名（Crossref container-title）
+container_overrides: {}
+#  "ICSE-2024": "10.1145/3597503"
+#  "SP-2024": "2024 IEEE Symposium on Security and Privacy (SP)"
